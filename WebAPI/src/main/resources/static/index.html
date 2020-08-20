@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>You first Spring application</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+</head>
+<body>
+
+<style type="text/css">
+
+    .field-validation-error {
+        color: #ff0000;
+    }
+</style>
+<div class="container">
+    <div class="col-md-6 col-md-offset-3">
+        <h1>Client Service</h1>
+
+        <div class="col-md-6 col-md-offset-3">
+            <p><b>Client Id:</b></p>
+            <input type="text" id="ClientId">
+        </div>
+        <button type="button" id="get" class="btn btn-success submit">Search</button>
+        <br/><br/>
+        <div class="col-md-6 col-md-offset-3">
+            <p><b>Client name</b></p>
+            <div id="result"></div>
+        </div>
+
+        <div class="alert alert-warning fade">
+            <strong><span class="alert-content"></span></strong>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="col-md-6 col-md-offset-3">
+        <h1>Create Client Service</h1>
+
+        <div class="col-md-6 col-md-offset-3">
+            <p><b>Client Name:</b></p>
+            <input type="text" id="ClientName">
+        </div>
+        <div class="col-md-6 col-md-offset-3">
+            <p><b>Assigned Employee Id:</b></p>
+            <input type="text" id="EmployeeId">
+        </div>
+        <button type="button" id="create" class="btn btn-success submit">Search</button>
+        <br/><br/>
+        <div class="col-md-6 col-md-offset-3">
+            <p><b>Created new Client with id:</b></p>
+            <div id="CreateResult"></div>
+        </div>
+
+        <div class="alert alert-warning fade">
+            <strong><span class="alert-content"></span></strong>
+        </div>
+    </div>
+</div>
+
+
+<script>
+
+    $(function () {
+
+        $('#get').click(function () {
+
+            var clientId = $('#ClientId').val();
+
+            fetch(`http://localhost:8080/clients/get/${clientId}`,
+                {
+                    method: 'GET',
+                })
+                .then(response => response.json())
+                .then((response) => $('#result').text(response.result))
+                .catch((result) => alert(result));
+
+        });
+
+
+        $('#create').click(function () {
+
+            var clientName = $('#ClientName').val();
+            var employeeId = $('#EmployeeId').val();
+
+            fetch(`http://localhost:8080/clients/create/`,
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                        // 'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: JSON.stringify({
+                        name: clientName,
+                        employeeId: employeeId
+                    })
+                })
+                .then(response => response.json())
+                .then((response) => $('#CreateResult').text(response.id))
+                .catch((result) => alert(result));
+
+        });
+
+    });
+
+
+</script>
+
+</body>
+</html>
