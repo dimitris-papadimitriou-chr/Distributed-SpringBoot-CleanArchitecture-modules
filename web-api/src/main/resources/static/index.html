@@ -67,7 +67,7 @@
 
             var clientId = $('#ClientId').val();
 
-            fetch(`http://localhost:8080/clients/get/${clientId}`,
+            fetch(`/clients/get/${clientId}`,
                 {
                     method: 'GET',
                 })
@@ -83,7 +83,7 @@
             var clientName = $('#ClientName').val();
             var employeeId = $('#EmployeeId').val();
 
-            fetch(`http://localhost:8080/clients/create/`,
+            fetch(`/clients/create/`,
                 {
                     method: 'POST',
                     headers: {
