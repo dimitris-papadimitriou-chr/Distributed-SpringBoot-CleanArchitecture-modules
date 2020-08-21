@@ -4,12 +4,12 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 
-public class SearchViewModel {
+public class GetClientViewModel {
 
     private String type;
     private String result;
 
-    public SearchViewModel(String result) {
+    public GetClientViewModel(String result) {
         this.result=result;
     }
 

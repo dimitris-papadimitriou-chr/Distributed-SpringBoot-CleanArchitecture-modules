@@ -30,6 +30,4 @@ public class Client {
         this.name = name;
         this.employeeId = employeeId;
     }
-
-
 }

@@ -2,8 +2,8 @@ package com.example.demo;
 
 import com.example.demo.clients.messages.CreateClientRequest;
 import com.example.demo.clients.messages.CreateClientResponse;
-import com.example.demo.viewmodels.SearchViewModel;
-import io.vavr.collection.Seq;
+import com.example.demo.viewmodels.GetClientViewModel;
+ import io.vavr.collection.Seq;
 import io.vavr.control.Either;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.annotation.EnableRabbit;
@@ -43,14 +43,14 @@ public class DemoApplication {
     }
 
     @GetMapping("/get/{clientId}")
-    public ResponseEntity<SearchViewModel> getClient(@PathVariable Integer clientId) {
+    public ResponseEntity<GetClientViewModel> getClient(@PathVariable Integer clientId) {
 
         var response = ((Either<String, String>)
                 rabbitTemplate.convertSendAndReceive(QueryClientQueueName, clientId));
 
         return response.fold(
-                error -> new ResponseEntity<>(new SearchViewModel(error), HttpStatus.BAD_REQUEST),
-                name -> new ResponseEntity<>(new SearchViewModel(name), HttpStatus.OK)
+                error -> new ResponseEntity<>(new GetClientViewModel(error), HttpStatus.BAD_REQUEST),
+                name -> new ResponseEntity<>(new GetClientViewModel(name), HttpStatus.OK)
         );
     }
 
