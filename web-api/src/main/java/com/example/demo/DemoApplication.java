@@ -62,7 +62,7 @@ public class DemoApplication {
                 rabbitTemplate.convertSendAndReceive(CommandClientQueueName, clientRequest));
 
         return response.fold(
-                errors -> new ResponseEntity<>(null, HttpStatus.BAD_REQUEST),
+                errors -> new ResponseEntity<>(HttpStatus.BAD_REQUEST),//disregard errors for this demo
                 result -> new ResponseEntity<>(new CreateClientResponse(result), HttpStatus.OK)
         );
     }
